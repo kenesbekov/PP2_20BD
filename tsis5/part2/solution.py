@@ -132,7 +132,7 @@ def file_methods(method, cwd):
         return select_file_method(os.path.join(os.path.dirname(cwd), new_name))
     elif method == 2:
         os.remove(file_name)
-        print('\nFile', new_name, 'has been removed')
+        print('\nFile', file_name, 'has been removed')
     elif method == 3:
         text = input('\nWrite content\nOr "0" to go back: ')
         if text == '0':
