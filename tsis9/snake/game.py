@@ -25,6 +25,7 @@ player1_win_background = pygame.image.load(os.path.join('backgrounds', 'player1_
 player2_win_background = pygame.image.load(os.path.join('backgrounds', 'player2_win.png'))
 wall_image = pygame.image.load(os.path.join('backgrounds', 'wall.png'))
 food_image = pygame.image.load(os.path.join('backgrounds', 'food.png'))
+snake_image = pygame.image.load(os.path.join('backgrounds', 'snake_block.png'))
 
 screen = pygame.display.set_mode(size)
 clock = pygame.time.Clock()
@@ -45,11 +46,8 @@ class SnakeBlock:
 
     def draw(self):
         for block in self.blocks:
-            x, y = block[0], block[1]
-            pygame.draw.rect(screen, self.color, [SIZE_BLOCK + x * SIZE_BLOCK + MARGIN * x,
-                                                  MARGIN_TOP + SIZE_BLOCK + y * SIZE_BLOCK + MARGIN * y,
-                                                  SIZE_BLOCK,
-                                                  SIZE_BLOCK])
+            draw_block(snake_image, block[0], block[1], 'image')
+
 
     def is_out(self):
         x, y = self.blocks[-1]
@@ -94,12 +92,12 @@ def get_random_empty_block(snake_blocks, a, b):  # 0 - 19, 21 - 40
     y = random.randint(0, HEIGHT_IN_BLOCK - 1)
     empty_block = [x, y]
     cnt = 1
-    while empty_block in walls:
-            empty_block[0] = random.randint(a, b)
-            cnt += 1
-            if cnt % 20 == 0:
-                cnt = 1
-                empty_block[1] = random.randint(0, HEIGHT_IN_BLOCK - 1)
+    while tuple(empty_block) in walls or tuple(empty_block) in snake_blocks:
+        empty_block[0] = random.randint(a, b)
+        cnt += 1
+        if cnt % 20 == 0:
+            cnt = 1
+            empty_block[1] = random.randint(0, HEIGHT_IN_BLOCK - 1)
     return empty_block
 
 
